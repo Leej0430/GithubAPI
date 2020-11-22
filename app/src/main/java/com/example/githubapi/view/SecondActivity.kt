@@ -34,7 +34,7 @@ class SecondActivity : AppCompatActivity() {
         tv_username.text= intent.getStringExtra("name")
         }
 
-        Network.initRetrofit().getRepoInfo(tv_username.text.toString()).enqueue(object : Callback<UserDetail>{
+        Network.initRetrofit().getDetail(tv_username.text.toString()).enqueue(object : Callback<UserDetail>{
             override fun onResponse(call: Call<UserDetail>, response: Response<UserDetail>) {
                 if (response.isSuccessful) {
                     response.body()?.let {

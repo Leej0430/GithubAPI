@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
                             this@MainActivity,
                             1
                         )
+
+
                         recyclerView.adapter = UserAdapter(it)
 
                     }

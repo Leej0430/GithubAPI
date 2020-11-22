@@ -14,7 +14,7 @@ interface Network{
     @GET("search/users?")
     fun getUserInfo(@Query("q")input: String):retrofit2.Call<UserList>
     @GET("users/{name}")
-    fun getRepoInfo(
+    fun getDetail(
     @Path("name") input:String):retrofit2.Call<UserDetail>
 
     companion object{
