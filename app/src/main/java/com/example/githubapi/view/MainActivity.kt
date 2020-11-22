@@ -22,8 +22,6 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,12 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
-    override fun requestData(){
-        presenter.requestData()
-    }
-    override fun displayData(dataSet:ListDataType.USERTYPE){
-        
-    }
+
    private fun search(name:String) {
         Network.initRetrofit().getUserInfo(name).enqueue(object : Callback<UserList> {
             override fun onResponse(
