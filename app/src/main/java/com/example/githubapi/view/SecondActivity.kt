@@ -8,15 +8,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.githubapi.R
-import com.example.githubapi.model.Network
-import com.example.githubapi.model.UserDetail
-import com.example.githubapi.model.UserList
+import com.example.githubapi.model.*
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_second.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SecondActivity : AppCompatActivity() {
+    private var repoInfos:List<RepoInfo>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
@@ -58,8 +59,35 @@ class SecondActivity : AppCompatActivity() {
             override fun onFailure(call: Call<UserDetail>, t: Throwable) {
 
             }
-        }
+        })
+        Network.initRetrofit().getRepo(tv_username.text.toString()).enqueue(object : Callback<List<RepoInfo>>{
+            override fun onResponse(call: Call<List<RepoInfo>>, response: Response<List<RepoInfo>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        repoInfos = it
+                        setupRecyclerView()
+
+                    }
+                } else {
+                    Toast.makeText(this@SecondActivity,"Connection Error",Toast.LENGTH_SHORT)
+                }
+            }
+
+            override fun onFailure(call: Call<List<RepoInfo>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
+
+
+    }
+    private fun setupRecyclerView(){
+        rv_repo_info.layoutManager = GridLayoutManager(
+                this,
+                1
         )
 
+        rv_repo_info.adapter = UserAdapter(ListDataType.REPOTYPE(repoInfos!!))
     }
 }

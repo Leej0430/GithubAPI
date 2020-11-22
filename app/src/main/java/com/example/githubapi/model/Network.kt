@@ -16,7 +16,9 @@ interface Network{
     @GET("users/{name}")
     fun getDetail(
     @Path("name") input:String):retrofit2.Call<UserDetail>
-
+    @GET("users/{name}/repos")
+    fun getRepo(
+            @Path("name")input:String):retrofit2.Call<List<RepoInfo>>
     companion object{
         fun initRetrofit():Network{
             return Retrofit.Builder()

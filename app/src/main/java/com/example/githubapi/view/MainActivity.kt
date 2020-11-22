@@ -10,7 +10,9 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapi.R
+import com.example.githubapi.model.ListDataType
 import com.example.githubapi.model.Network
+import com.example.githubapi.model.UserDetail
 import com.example.githubapi.model.UserList
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -20,6 +22,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,12 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
+    override fun requestData(){
+        presenter.requestData()
+    }
+    override fun displayData(dataSet:ListDataType.USERTYPE){
+        
+    }
    private fun search(name:String) {
         Network.initRetrofit().getUserInfo(name).enqueue(object : Callback<UserList> {
             override fun onResponse(
@@ -52,14 +61,14 @@ class MainActivity : AppCompatActivity() {
                             1
                         )
 
-
-                        recyclerView.adapter = UserAdapter(it)
+                        recyclerView.adapter = UserAdapter(ListDataType.USERTYPE(it))
 
                     }
                 } else {
                     Toast.makeText(this@MainActivity,"Error",Toast.LENGTH_SHORT)
                 }
             }
+
 
             override fun onFailure(call: Call<UserList>, t: Throwable) {
 

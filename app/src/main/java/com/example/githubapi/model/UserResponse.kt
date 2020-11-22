@@ -24,3 +24,11 @@ data class UserDetail(
     val following:Int?,
     val bio:String?
 ):Parcelable
+
+@Parcelize
+data class RepoInfo(
+        val name :String,
+        val forks:Int,
+        val stargazers_count:Int
+
+):Parcelable
